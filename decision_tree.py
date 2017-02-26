@@ -1,14 +1,9 @@
 import util
 import numpy as np
 import copy
+from decision_node import DecisionNode
+from CONST import *
 
-DAY = 0
-OUTLOOK = 1
-TEMP = 2
-HUMIDITY = 3
-WIND = 4
-TENNIS = 5
-POSITIVE_TARGET = 'YES'
 
 
 
@@ -18,6 +13,13 @@ class DecisionTree:
         data = np.array(data)
         self.target_column = target_column
         self.data = data
+        self.tree = None
+
+    def build_tree(self):
+        order = self.get_attribute_order()
+        root = DecisionNode(self.data,order, 1, self.target_column)
+        self.tree = root
+        return self.tree
 
     def get_attribute_order(self):
         # calculate information gain to choose the order
@@ -29,7 +31,7 @@ class DecisionTree:
         aspect_gain_sort.sort()
         order = []
         for gain in aspect_gain_sort:
-            idx = aspect_gain_list.index(gain)
+            idx = aspect_gain_list.index(gain) + 1
             order.append(idx)
         return order
 

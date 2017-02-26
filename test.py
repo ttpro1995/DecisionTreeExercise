@@ -20,6 +20,13 @@ def test_order():
     order = tree.get_attribute_order()
     print (order)
 
-test_calculate_entropy()
-test_gain()
-test_order()
+# test_calculate_entropy()
+# test_gain()
+# test_order()
+
+def test_build_tree():
+    tree = DecisionTree(5)
+    root = tree.build_tree()
+    print ('break')
+
+test_build_tree()
