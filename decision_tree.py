@@ -3,8 +3,8 @@ import numpy as np
 import copy
 from decision_node import DecisionNode
 from CONST import *
-
-
+import networkx as nx
+import matplotlib.pyplot as plt
 
 
 class DecisionTree:
@@ -14,12 +14,25 @@ class DecisionTree:
         self.target_column = target_column
         self.data = data
         self.tree = None
+        self.G = nx.Graph()
 
     def build_tree(self):
         order = self.get_attribute_order()
-        root = DecisionNode(self.data,order, 1, self.target_column)
+        root = DecisionNode(self.data,order, 1, self.target_column, 'ROOT')
         self.tree = root
         return self.tree
+
+    def draw_tree(self):
+        self.tree.draw_graph(self.G)
+        label_dict = self.tree.get_labels()
+        nx.draw(self.G)
+        #pos = nx.spring_layout(self.G)
+        #nx.draw_networkx_labels(self.G, pos, label_dict, font_size=16)
+        plt.draw()
+        plt.show()
+
+    def print_tree(self):
+        self.tree.print_node(0)
 
     def get_attribute_order(self):
         # calculate information gain to choose the order

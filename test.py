@@ -27,6 +27,7 @@ def test_order():
 def test_build_tree():
     tree = DecisionTree(5)
     root = tree.build_tree()
+    tree.print_tree()
     print ('break')
 
 test_build_tree()
