@@ -1,3 +1,5 @@
+# Thai Thien
+# 1351040
 import util
 import numpy as np
 import copy
@@ -25,11 +27,8 @@ class DecisionTree:
     def draw_tree(self):
         self.tree.draw_graph(self.G)
         label_dict = self.tree.get_labels()
-        nx.draw(self.G)
-        #pos = nx.spring_layout(self.G)
-        #nx.draw_networkx_labels(self.G, pos, label_dict, font_size=16)
-        plt.draw()
-        plt.show()
+        # nx.draw(self.G)
+        return self.G
 
     def print_tree(self):
         self.tree.print_node(0)

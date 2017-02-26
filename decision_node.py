@@ -47,7 +47,7 @@ class DecisionNode:
         indent_string = ' '
         for i in range(0, indent):
             indent_string+= ' '
-        string_print = indent_string+self.label+' +'+str(self.pos)+' -'+str(self.neg) + self.parent_info()
+        string_print = indent_string+self.label+' +'+str(self.pos)+' -'+str(self.neg)
         print (string_print)
         for child in self.children:
             child.print_node(indent+2)
@@ -71,3 +71,6 @@ class DecisionNode:
             child_data = self.data[np.in1d(self.data[:, self.cur_attribute], filter)]
             child = DecisionNode(child_data, self.order, self.cur_attribute+1, self.target_column, v, self)
             self.children.append(child)
+
+# Thai Thien
+# 1351040
