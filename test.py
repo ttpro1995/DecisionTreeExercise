@@ -15,5 +15,11 @@ def test_gain():
     g_wind = tree.calculate_information_gain(4)
     print (g_wind)
 
+def test_order():
+    tree = DecisionTree(5)
+    order = tree.get_attribute_order()
+    print (order)
+
 test_calculate_entropy()
 test_gain()
+test_order()

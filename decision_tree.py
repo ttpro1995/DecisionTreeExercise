@@ -1,12 +1,14 @@
 import util
 import numpy as np
+import copy
+
 DAY = 0
 OUTLOOK = 1
 TEMP = 2
 HUMIDITY = 3
 WIND = 4
 TENNIS = 5
-
+POSITIVE_TARGET = 'YES'
 
 
 
@@ -17,6 +19,19 @@ class DecisionTree:
         self.target_column = target_column
         self.data = data
 
+    def get_attribute_order(self):
+        # calculate information gain to choose the order
+        aspect_gain_list = []
+        for i in range(1, self.target_column):
+            aspect_gain = self.calculate_information_gain(i)
+            aspect_gain_list.append(aspect_gain)
+        aspect_gain_sort = copy.deepcopy(aspect_gain_list)
+        aspect_gain_sort.sort()
+        order = []
+        for gain in aspect_gain_sort:
+            idx = aspect_gain_list.index(gain)
+            order.append(idx)
+        return order
 
 
     def calculate_entropy(self, column_of_a = None):
@@ -24,7 +39,7 @@ class DecisionTree:
         # s = day/outlook/temp/humidity/wind
         target_concept = self.data[:,self.target_column]
         if column_of_a == None:
-            t = (target_concept == 'YES').sum()
+            t = (target_concept == POSITIVE_TARGET).sum()
             f = len(target_concept) - t
             return util.entropy(t,f)
 
@@ -38,7 +53,7 @@ class DecisionTree:
             idx_v = idx_v[0]
             t = 0
             for idx in idx_v:
-                if (target_concept[idx] == 'YES'):
+                if (target_concept[idx] == POSITIVE_TARGET):
                     t+=1
             f = len(idx_v) - t
             e = util.entropy(t,f)
