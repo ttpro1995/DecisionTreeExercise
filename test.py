@@ -10,4 +10,10 @@ def test_calculate_entropy():
     print (c,d)
     print (tree.calculate_entropy())
 
+def test_gain():
+    tree = DecisionTree(5)
+    g_wind = tree.calculate_information_gain(4)
+    print (g_wind)
+
 test_calculate_entropy()
+test_gain()

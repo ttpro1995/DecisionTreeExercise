@@ -46,6 +46,17 @@ class DecisionTree:
         return v_list, entropy_v_list
 
 
-    def calculate_information_gain(self, a_list, e_s_a_list):
-        pass
+    def calculate_information_gain(self, column_of_a):
+        data = self.data[:, column_of_a]
+        es = self.calculate_entropy()
+        v_list, entropy_v_list = self.calculate_entropy(column_of_a)
+        sum_of_part2 = 0
+        for idx, v in enumerate(v_list):
+            sv = (data == v).sum()
+            s = len(data)
+            esv = entropy_v_list[idx]
+            sum_of_part2+= (float(sv)/s)*esv
+        gain = es - sum_of_part2
+        return gain
+
 
