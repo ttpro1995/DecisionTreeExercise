@@ -2,11 +2,10 @@
 # 1351040
 import util
 import numpy as np
-import copy
 from decision_node import DecisionNode
 from CONST import *
 import networkx as nx
-import matplotlib.pyplot as plt
+
 
 
 class DecisionTree:
