@@ -18,73 +18,22 @@ class DecisionTree:
         self.G = nx.Graph()
 
     def build_tree(self):
-        order = self.get_attribute_order()
-        root = DecisionNode(self.data,order, 1, self.target_column, 'ROOT')
+        choosed = [False] * len(self.data[0, :])
+        choosed[0] = True
+        choosed[self.target_column] = True
+        order = util.get_attribute_order(self.data, self.target_column, choosed)
+        choosed[order[0]] = True
+        root = DecisionNode(self.data, order[0], self.target_column,'ROOT', choosed)
         self.tree = root
         return self.tree
 
     def draw_tree(self):
         self.tree.draw_graph(self.G)
         label_dict = self.tree.get_labels()
-        # nx.draw(self.G)
         return self.G
 
     def print_tree(self):
         self.tree.print_node(0)
 
-    def get_attribute_order(self):
-        # calculate information gain to choose the order
-        aspect_gain_list = []
-        for i in range(1, self.target_column):
-            aspect_gain = self.calculate_information_gain(i)
-            aspect_gain_list.append(aspect_gain)
-        aspect_gain_sort = copy.deepcopy(aspect_gain_list)
-        aspect_gain_sort.sort()
-        order = []
-        for gain in aspect_gain_sort:
-            idx = aspect_gain_list.index(gain) + 1
-            order.append(idx)
-        return order
-
-
-    def calculate_entropy(self, column_of_a = None):
-        # calculate E(s)
-        # s = day/outlook/temp/humidity/wind
-        target_concept = self.data[:,self.target_column]
-        if column_of_a == None:
-            t = (target_concept == POSITIVE_TARGET).sum()
-            f = len(target_concept) - t
-            return util.entropy(t,f)
-
-        data = self.data[:, column_of_a]
-
-        v_list = np.unique(data)
-        entropy_v_list = []
-        for v in v_list:
-            # v is value of a
-            idx_v = np.where(data==v)
-            idx_v = idx_v[0]
-            t = 0
-            for idx in idx_v:
-                if (target_concept[idx] == POSITIVE_TARGET):
-                    t+=1
-            f = len(idx_v) - t
-            e = util.entropy(t,f)
-            entropy_v_list.append(e)
-        return v_list, entropy_v_list
-
-
-    def calculate_information_gain(self, column_of_a):
-        data = self.data[:, column_of_a]
-        es = self.calculate_entropy()
-        v_list, entropy_v_list = self.calculate_entropy(column_of_a)
-        sum_of_part2 = 0
-        for idx, v in enumerate(v_list):
-            sv = (data == v).sum()
-            s = len(data)
-            esv = entropy_v_list[idx]
-            sum_of_part2+= (float(sv)/s)*esv
-        gain = es - sum_of_part2
-        return gain
 
 
