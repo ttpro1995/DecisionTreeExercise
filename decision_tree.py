@@ -18,6 +18,7 @@ class DecisionTree:
         self.G = nx.Graph()
 
     def build_tree(self):
+        # added by Van Duy Vinh----------------------------------
         choosed = [False] * len(self.data[0, :])
         choosed[0] = True
         choosed[self.target_column] = True

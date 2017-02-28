@@ -1,5 +1,7 @@
 # Thai Thien
 # 1351040
+# with some contribution from Van Duy Vinh
+
 import util
 from decision_tree import DecisionTree
 

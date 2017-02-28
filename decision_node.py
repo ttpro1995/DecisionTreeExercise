@@ -12,7 +12,9 @@ class DecisionNode:
         self.data = data
         self.target_column = target_column
         self.target_concept = data[:,target_column]
+        # changed by Van Duy Vinh----------------------------------
         self.choosed = choosed
+        # changed by Van Duy Vinh----------------------------------
         self.cur_attribute = cur_attribute
         self.children = []
         self.parent = parent
@@ -71,9 +73,11 @@ class DecisionNode:
         for v in v_list:
             filter = np.asarray([v])
             child_data = self.data[np.in1d(self.data[:, self.cur_attribute], filter)]
+            # changed by Van Duy Vinh----------------------------------
             v_order = util.get_attribute_order(child_data, self.target_column, self.choosed)
             choosed = copy.deepcopy(self.choosed)
             choosed[v_order[0]] = True
             child = DecisionNode(child_data, v_order[0], self.target_column, v, choosed, self)
+            # changed by Van Duy Vinh----------------------------------
             self.children.append(child)
 

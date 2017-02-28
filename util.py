@@ -51,6 +51,7 @@ def hierarchy_pos(G, root = 'ROOT', width=1., vert_gap = 0.2, vert_loc = 0, xcen
                                 parent = root)
     return pos
 
+# changed by Van Duy Vinh----------------------------------
 def get_attribute_order(data, target_column, choosed):
     # calculate information gain to choose the order
     aspect_gain_list = []
@@ -111,3 +112,4 @@ def calculate_information_gain(data, target_column, column_of_a):
         sum_of_part2+= (float(sv)/s)*esv
     gain = es - sum_of_part2
     return gain
+# changed by Van Duy Vinh----------------------------------
