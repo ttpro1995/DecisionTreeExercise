@@ -1,16 +1,18 @@
 from CONST import *
 import numpy as np
+import copy
+from util import get_attribute_order
 
 class DecisionNode:
 
-    def __init__(self, data, order, cur_attribute, target_column, name, parent = None):
+    def __init__(self, data, cur_attribute, target_column, name, choosed, parent = None):
         self.name = name
         self.pos = 0
         self.neg = 0
         self.data = data
         self.target_column = target_column
         self.target_concept = data[:,target_column]
-        self.order = order
+        self.choosed = choosed
         self.cur_attribute = cur_attribute
         self.children = []
         self.parent = parent
@@ -69,8 +71,9 @@ class DecisionNode:
         for v in v_list:
             filter = np.asarray([v])
             child_data = self.data[np.in1d(self.data[:, self.cur_attribute], filter)]
-            child = DecisionNode(child_data, self.order, self.cur_attribute+1, self.target_column, v, self)
+            v_order = get_attribute_order(child_data, self.target_column, self.choosed)
+            choosed = copy.deepcopy(self.choosed)
+            choosed[v_order[0]] = True
+            child = DecisionNode(child_data, v_order[0], self.target_column, v, choosed, self)
             self.children.append(child)
 
-# Thai Thien
-# 1351040
