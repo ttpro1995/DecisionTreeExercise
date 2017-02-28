@@ -1,7 +1,7 @@
 from CONST import *
 import numpy as np
 import copy
-from util import get_attribute_order
+import util
 
 class DecisionNode:
 
@@ -49,10 +49,10 @@ class DecisionNode:
         indent_string = ' '
         for i in range(0, indent):
             indent_string+= ' '
-        string_print = indent_string+self.label+' +'+str(self.pos)+' -'+str(self.neg)
+        string_print = indent_string+ str(self.label)+' +'+str(self.pos)+' -'+str(self.neg)
         print (string_print)
         for child in self.children:
-            child.print_node(indent+2)
+            child.print_node(indent+3)
 
     def parent_info(self):
         if (self.parent==None):
@@ -71,7 +71,7 @@ class DecisionNode:
         for v in v_list:
             filter = np.asarray([v])
             child_data = self.data[np.in1d(self.data[:, self.cur_attribute], filter)]
-            v_order = get_attribute_order(child_data, self.target_column, self.choosed)
+            v_order = util.get_attribute_order(child_data, self.target_column, self.choosed)
             choosed = copy.deepcopy(self.choosed)
             choosed[v_order[0]] = True
             child = DecisionNode(child_data, v_order[0], self.target_column, v, choosed, self)
